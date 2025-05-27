@@ -15,7 +15,7 @@ We utilized three different datasets for our experiments on endoscopic depth and
 ### Training and evaluation scripts 
   #### 1. Training for Self-supervised Depth and Pose Estimation:
   <pre><code>
-  cd ./Self-supervised-Monocular-Depth-and-Pose-Estimation-for-Endoscopy-with-Latent-Priors
+  cd ./Self-supervised-with-Latent-Priors
   python train.py --model_name endo --png --data_path / --split endo --dataset endo --height 480 --width 480
   </code></pre>
 
