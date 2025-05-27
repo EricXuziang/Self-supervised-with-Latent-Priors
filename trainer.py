@@ -556,15 +556,15 @@ class Trainer:
         """
         losses = {}
         total_loss = 0
-        slam_pose_ouput = '/'
         KLD_loss = []
         
         for frame_id in self.opt.frame_ids[1:]:
             out_mu = outputs[("out_mu", 0, frame_id)]
             out_var = outputs[("out_var", 0, frame_id)]
             z = self.reparameterize(out_mu, out_var)
+            mu0= inputs[("slam_pose")].to(torch.float32)
             
-            KLD_loss.append(self.kld_loss(out_mu, out_var))
+            KLD_loss.append(self.kld_loss(out_mu, out_var, mu0))
                             
 
         for scale in self.opt.scales:
@@ -653,12 +653,12 @@ class Trainer:
 
         total_loss /= self.num_scales
 
-        # 增加regulation_loss
-
-        # losses["loss_orginal"] = total_loss
-        # total_loss = total_loss +  torch.sum(torch.stack(KLD_loss))
-        losses["loss"] = total_loss
-        # losses["loss_kld"] =  torch.sum(torch.stack(KLD_loss))
+        # regulation_loss
+        losses["loss_orginal"] = total_loss
+        losses["loss_kld"] =  torch.sum(torch.stack(KLD_loss))
+        total_loss = total_loss +  torch.sum(torch.stack(KLD_loss))
+        # losses["loss"] = total_loss
+        
 
         return losses
 
@@ -802,10 +802,10 @@ class Trainer:
         epsilon = torch.randn_like(logvar)
         return epsilon * std + mean
 
-    def kld_loss(self, mu, var):
+    def kld_loss(self, mu, var, mu0):
         mu = mu.reshape(-1,6)
         var = var.reshape(-1,6)
-        return - 0.5 * torch.sum(1+ var - mu.pow(2) - var.exp())
+        return - 0.5 * torch.sum(1+ var - (mu - mu0).pow(2) - var.exp())
 
 # python train.py --model_name endo_all_vae_test3 --png --data_path /well/rittscher/projects/3d_ziang/dataset/data_all --split endo --dataset endo --height 480 --width 480
 # CUDA_VISIBLE_DEVICES=3 python train.py --model_name latentbank_final_1 --png --data_path /well/rittscher/projects/3d_ziang/dataset/data_all --split endo --dataset endo --height 480 --width 480 --disable_automasking --batch_size 16 --learning_rate 1e-4 --num_epochs 20 
