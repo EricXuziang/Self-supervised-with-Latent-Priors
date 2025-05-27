@@ -171,7 +171,12 @@ class MonoDataset(data.Dataset):
 
             inputs[("K", scale)] = torch.from_numpy(K)
             inputs[("inv_K", scale)] = torch.from_numpy(inv_K)
-
+            
+        # load slam pose to dataloader
+        slam_pose_path = self.get_pose_path(folder)
+        slam_pose= np.loadtxt(slam_pose_path, dtype=float)
+        inputs[("slam_pose")] = torch.from_numpy(slam_pose).unsqueeze(0)
+        
         if do_color_aug:
             color_aug = transforms.ColorJitter(
                 self.brightness, self.contrast, self.saturation, self.hue)
