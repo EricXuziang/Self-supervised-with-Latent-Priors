@@ -806,6 +806,3 @@ class Trainer:
         mu = mu.reshape(-1,6)
         var = var.reshape(-1,6)
         return - 0.5 * torch.sum(1+ var - (mu - mu0).pow(2) - var.exp())
-
-# python train.py --model_name endo_all_vae_test3 --png --data_path /well/rittscher/projects/3d_ziang/dataset/data_all --split endo --dataset endo --height 480 --width 480
-# CUDA_VISIBLE_DEVICES=3 python train.py --model_name latentbank_final_1 --png --data_path /well/rittscher/projects/3d_ziang/dataset/data_all --split endo --dataset endo --height 480 --width 480 --disable_automasking --batch_size 16 --learning_rate 1e-4 --num_epochs 20 
