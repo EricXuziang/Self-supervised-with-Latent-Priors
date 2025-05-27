@@ -339,6 +339,3 @@ def evaluate(opt):
 if __name__ == "__main__":
     options = MonodepthOptions()
     evaluate(options.parse())
-
-# python evaluate_depth.py --load_weights_folder /well/rittscher/users/ycr745/monodepth2_revised/tmp/endo/models/weights_19/ --eval_mono --data_path /well/rittscher/projects/3d_ziang/dataset/SyntheticColon_III --eval_split endo
-# python evaluate_depth.py --load_weights_folder /well/rittscher/users/ycr745/monodepth2_revised/tmp/endo_all_test_pose/models/weights_9/ --eval_mono --data_path /well/rittscher/projects/3d_ziang/dataset/SyntheticColon_II --eval_split endo_2
