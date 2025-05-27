@@ -556,24 +556,14 @@ class Trainer:
         """
         losses = {}
         total_loss = 0
-        # 尝试正则化pose纬度，增加regulation_loss, KLD_loss
-        # regulation_loss = []
+        slam_pose_ouput = '/'
         KLD_loss = []
-
+        
         for frame_id in self.opt.frame_ids[1:]:
             out_mu = outputs[("out_mu", 0, frame_id)]
             out_var = outputs[("out_var", 0, frame_id)]
             z = self.reparameterize(out_mu, out_var)
-
-            # translation = outputs[("translation", 0, frame_id)]
-            # axisangle = outputs[("axisangle", 0, frame_id)]
-            # M = outputs[("cam_T_cam", 0, frame_id)]
-
-            # x = translation[:, 0, :, 0]
-            # y = translation[:, 0, :, 1]
-            # z = translation[:, 0, :, 2]
-
-            # regulation_loss.append(((z - 10 * x) ** 2 + (z - 10 * y) ** 2).mean())
+            
             KLD_loss.append(self.kld_loss(out_mu, out_var))
                             
 
