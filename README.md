@@ -1,6 +1,6 @@
 # Self-supervised Monocular Depth and Pose Estimation for Endoscopy with Latent Priors
 
-**Contributors** - [Ziang Xu](xuziang.uk@gmail.com) and [Bin Li]
+**Contributors** - [Ziang Xu](xuziang.uk@gmail.com) and [Bin Li](bin.li@eng.ox.ac.uk)
 
 ### Dataset details
 We utilized three different datasets for our experiments on endoscopic depth and pose estimation, including two synthetic datasets and one real-world dataset, as listed below:
